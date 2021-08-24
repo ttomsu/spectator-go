@@ -1,6 +1,7 @@
 package spectator
 
 import (
+	"fmt"
 	"runtime"
 	"time"
 )
@@ -44,6 +45,7 @@ func updateMemStats(m *memStatsCollector, mem *runtime.MemStats) {
 	timeSinceLastGC := nanos - int64(mem.LastGC)
 	secondsSinceLastGC := float64(timeSinceLastGC) / 1e9
 	m.gcAge.Set(secondsSinceLastGC)
+	fmt.Printf("Clock=%v, LastGC=%v, Diff=%v Seconds=%v\n", nanos, mem.LastGC, timeSinceLastGC, secondsSinceLastGC)
 
 	m.gcCount.Set(int64(mem.NumGC))
 	m.forcedGcCount.Set(int64(mem.NumForcedGC))
